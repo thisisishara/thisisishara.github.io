@@ -1,1 +1,323 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"/><meta http-equiv="X-UA-Compatible" content="ie=edge"/><meta name="theme-color" content="#000000"/><meta name="title" content="This is Ishara"/><meta name="description" content="Ishara's portfolio website"/><meta name="robots" content="index, follow"/><meta property="og:site_name" content="This is Ishara"/><meta property="og:type" content="website"/><meta property="og:url" content="https://www.thisisishara.com"/><meta property="og:title" content="This is Ishara"/><meta property="og:description" content="Ishara's portfolio website"/><meta property="og:image" content="https://i.imgur.com/NASyZ0m.png"/><meta name="twitter:domain" content="thisisishara.com"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:url" content="https://www.thisisishara.com"/><meta name="twitter:title" content="This is Ishara"/><meta name="twitter:description" content="Ishara's portfolio website"/><meta name="twitter:image" content="https://i.imgur.com/NASyZ0m.png"/><meta name="google" content="nositelinkssearchbox"><meta name="google-site-verification" content="xHfTIHLqTmLN2iegq8W_8HMYe-eGu9wCdIbODIwTzKw"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/><link href="https://fonts.googleapis.com/css?family=JetBrains Mono" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet"/><link rel="icon" href="/res/images/favicon/favicon.ico" type="image/ico"/><link rel="apple-touch-icon" href="/res/images/favicon/android-chrome-192x192.png"/><link rel="manifest" href="/manifest.json"/><title>This is Ishara</title><script defer="defer" src="/static/js/main.4bcf1a7f.js"></script><link href="/static/css/main.077c1f99.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- FAVICONS -->
+    <link rel="icon" href="./assets/favicon/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
+
+    <!-- Apple -->
+    <link rel="apple-touch-icon" href="./assets/favicon/apple-touch-icon.png">
+
+    <!-- Android / PWA -->
+    <link rel="manifest" href="./assets/favicon/site.webmanifest">
+
+    <!-- Android Chrome icons (optional but good to include explicitly) -->
+    <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="./assets/favicon/android-chrome-512x512.png">
+
+    <!-- Theme color (important for mobile browser UI) -->
+    <meta name="theme-color" content="#0b0f14">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Ishara Dissanayake</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg: #0b0f14;
+            --text: #e5e7eb;
+            --muted: #98a2b3;
+            --border: #202938;
+            --accent: #4CAF50;
+            --card: rgba(255, 255, 255, 0.03);
+        }
+
+        /* LIGHT MODE */
+        body.light {
+            --bg: #f2f4f8;
+            --text: #0b0f19;
+            --muted: #4b5563;
+            --border: #d9dee7;
+            --accent: #43A047;
+            --card: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+
+            padding: 60px 14px;
+        }
+
+        /* CONTAINER */
+        .container {
+            width: 100%;
+            max-width: 860px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+            background: var(--card);
+            margin: auto;
+        }
+
+        /* BANNER */
+        .banner {
+            height: 165px;
+            background: url("./assets/banner.png") center/cover;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 12px;
+        }
+
+        .toggle {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            background: transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            color: var(--text);
+            transition: 0.2s;
+        }
+
+        .toggle:hover {
+            border-color: var(--accent);
+        }
+
+        /* PROFILE */
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 0 22px;
+            margin-top: -32px;
+        }
+
+        .profile img {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 3px solid var(--bg);
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 1.55rem;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+        }
+
+        .subtitle {
+            padding: 6px 22px 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.55;
+        }
+
+        /* LINKS */
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 14px 22px;
+        }
+
+        .link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            padding: 7px 10px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text);
+            background: transparent;
+            transition: 0.15s ease;
+        }
+
+        .link:hover {
+            border-color: var(--accent);
+            transform: translateY(-1px);
+            background: rgba(91, 140, 255, 0.08);
+        }
+
+        .icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* SECTION */
+        .section {
+            padding: 10px 22px 20px;
+        }
+
+        .section h2 {
+            font-size: 11px;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        /* CARD */
+        .card {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            background: var(--card);
+        }
+
+        li {
+            list-style: none;
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            opacity: 0.8;
+        }
+
+        .footer {
+            padding: 14px 22px 18px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="banner"></div>
+
+        <div class="topbar">
+            <button class="toggle" onclick="toggleTheme()">
+                <i data-lucide="moon" id="themeIcon"></i>
+            </button>
+        </div>
+
+        <div class="profile">
+            <img src="./assets/headshot.png" />
+            <h1>Ishara Dissanayake</h1>
+        </div>
+
+        <p class="subtitle">
+            AI Engineer building LLM applications, developer tools, and production AI systems.
+        </p>
+
+        <div class="links">
+            <a class="link" href="./assets/resume.pdf">
+                <i data-lucide="file-text" class="icon"></i>
+                Resume
+            </a>
+
+            <a class="link" href="https://github.com/thisisishara">
+                <i data-lucide="github" class="icon"></i>
+                GitHub
+            </a>
+
+            <a class="link" href="https://linkedin.com">
+                <i data-lucide="linkedin" class="icon"></i>
+                LinkedIn
+            </a>
+
+            <a class="link" href="mailto:mail@example.com">
+                <i data-lucide="mail" class="icon"></i>
+                Email
+            </a>
+        </div>
+
+        <div class="section">
+            <h2>Currently</h2>
+            <div class="card">
+                <ul>
+                    <li>Building AI-powered applications</li>
+                    <li>Working with LLMs, RAG, evaluation systems</li>
+                    <li>Exploring open-source AI tooling</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            © <span id="year"></span> Ishara Dissanayake
+        </div>
+
+    </div>
+
+    <script>
+        /* THEME INIT (LOCAL STORAGE) */
+        function setTheme(isLight) {
+            document.body.classList.toggle("light", isLight);
+            localStorage.setItem("theme", isLight ? "light" : "dark");
+
+            const icon = document.getElementById("themeIcon");
+            icon.setAttribute("data-lucide", isLight ? "sun" : "moon");
+            lucide.createIcons();
+        }
+
+        /* TOGGLE */
+        function toggleTheme() {
+            const isLight = !document.body.classList.contains("light");
+            setTheme(isLight);
+        }
+
+        /* INIT THEME */
+        const savedTheme = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: light)").matches;
+
+        if (savedTheme === "light" || (!savedTheme && prefersLight)) {
+            setTheme(true);
+        } else {
+            setTheme(false);
+        }
+
+        /* YEAR */
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        lucide.createIcons();
+    </script>
+
+</body>
+
+</html>
