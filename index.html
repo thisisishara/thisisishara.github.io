@@ -2,56 +2,26 @@
 <html lang="en">
 
 <head>
-    <!-- FAVICONS -->
-    <link rel="icon" href="./assets/favicon/favicon.ico" sizes="any">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon/favicon-16x16.png">
-
-    <!-- Apple -->
-    <link rel="apple-touch-icon" href="./assets/favicon/apple-touch-icon.png">
-
-    <!-- Android / PWA -->
-    <link rel="manifest" href="./assets/favicon/site.webmanifest">
-
-    <!-- Android Chrome icons (optional but good to include explicitly) -->
-    <link rel="icon" type="image/png" sizes="192x192" href="./assets/favicon/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="./assets/favicon/android-chrome-512x512.png">
-
-    <!-- Theme color (important for mobile browser UI) -->
-    <meta name="theme-color" content="#0b0f14">
-
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Ishara Dissanayake</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
-            --bg: #0b0f14;
-            --text: #e5e7eb;
-            --muted: #98a2b3;
-            --border: #202938;
+            --bg: #050505;
+            --text: #e8e8e8;
+            --muted: #8a8a8a;
+            --muted2: #5a5a5a;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.18);
             --accent: #4CAF50;
-            --card: rgba(255, 255, 255, 0.03);
-        }
-
-        /* LIGHT MODE */
-        body.light {
-            --bg: #f2f4f8;
-            --text: #0b0f19;
-            --muted: #4b5563;
-            --border: #d9dee7;
-            --accent: #43A047;
-            --card: #ffffff;
+            --card: rgba(15, 15, 15, 0.78);
         }
 
         * {
@@ -61,261 +31,406 @@
         }
 
         body {
-            font-family: Inter, sans-serif;
+            font-family: 'Inter', system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
-
             min-height: 100vh;
             display: flex;
             justify-content: center;
-
-            padding: 60px 14px;
+            padding: 52px 16px 80px;
+            overflow-x: hidden;
         }
 
-        /* CONTAINER */
-        .container {
+        canvas#stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrap {
             width: 100%;
-            max-width: 860px;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            overflow: hidden;
-            background: var(--card);
+            max-width: 760px;
             margin: auto;
+            position: relative;
+            z-index: 1;
         }
 
-        /* BANNER */
-        .banner {
-            height: 165px;
-            background: url("./assets/banner.png") center/cover;
-        }
-
-        /* TOPBAR */
-        .topbar {
-            display: flex;
-            justify-content: flex-end;
-            padding: 10px 12px;
-        }
-
-        .toggle {
-            width: 34px;
-            height: 34px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .hero {
+            border-radius: 20px;
+            overflow: hidden;
             border: 1px solid var(--border);
-            background: transparent;
-            border-radius: 10px;
-            cursor: pointer;
-            color: var(--text);
-            transition: 0.2s;
+            background: var(--card);
+            backdrop-filter: blur(32px);
         }
 
-        .toggle:hover {
-            border-color: var(--accent);
+        .banner {
+            height: 160px;
+            background: url("./assets/banner.png") center/cover no-repeat;
         }
 
-        /* PROFILE */
-        .profile {
+        .profile-row {
             display: flex;
             align-items: center;
-            gap: 14px;
-            padding: 0 22px;
-            margin-top: -32px;
+            gap: 16px;
+            padding: 18px 26px 0;
         }
 
-        .profile img {
-            width: 72px;
-            height: 72px;
+        .avatar {
+            width: 68px;
+            height: 68px;
             border-radius: 50%;
-            border: 3px solid var(--bg);
+            border: 2.5px solid rgba(255, 255, 255, 0.1);
             object-fit: cover;
         }
 
         h1 {
-            font-size: 1.55rem;
-            font-weight: 800;
-            letter-spacing: -0.6px;
+            font-size: 1.38rem;
+            font-weight: 700;
+            letter-spacing: -0.4px;
         }
 
-        .subtitle {
-            padding: 6px 22px 0;
+        .handle {
+            font-size: 11.5px;
             color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.55;
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 3px;
         }
 
-        /* LINKS */
+        .bio {
+            padding: 12px 26px 0;
+            color: var(--muted);
+            font-size: 0.875rem;
+            line-height: 1.7;
+            max-width: 540px;
+        }
+
         .links {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            padding: 14px 22px;
+            gap: 7px;
+            padding: 14px 26px 22px;
         }
 
         .link {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            padding: 7px 10px;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 12px;
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 8px;
             text-decoration: none;
-            color: var(--text);
+            color: var(--muted);
             background: transparent;
-            transition: 0.15s ease;
+            transition: 0.2s;
+        }
+
+        /* ✅ ICON FIX (ONLY CHANGE) */
+        .link svg {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+            fill: currentColor;
+            stroke: currentColor;
+        }
+
+        /* IMPORTANT: preserve stroke-only icons properly */
+        .link svg[fill="none"] {
+            fill: none;
         }
 
         .link:hover {
-            border-color: var(--accent);
-            transform: translateY(-1px);
-            background: rgba(91, 140, 255, 0.08);
+            border-color: var(--border-hover);
+            color: var(--text);
         }
 
-        .icon {
-            width: 16px;
-            height: 16px;
+        .cta {
+            background: var(--accent);
+            border-color: transparent;
+            color: #fff;
+            font-weight: 600;
         }
 
-        /* SECTION */
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 0 26px;
+        }
+
         .section {
-            padding: 10px 22px 20px;
+            padding: 18px 26px;
         }
 
-        .section h2 {
-            font-size: 11px;
-            letter-spacing: 1.4px;
+        .section-label {
+            font-size: 10px;
+            letter-spacing: 1.8px;
             text-transform: uppercase;
             color: var(--accent);
-            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 12px;
         }
 
-        /* CARD */
-        .card {
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 14px;
-            background: var(--card);
-        }
-
-        li {
+        .now-list {
             list-style: none;
-            color: var(--muted);
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-            padding-left: 12px;
-            position: relative;
         }
 
-        li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            opacity: 0.8;
+        .now-list li {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 5px 0;
+            color: var(--muted);
+            font-size: 0.85rem;
+            line-height: 1.65;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .now-list li:last-child {
+            border-bottom: none;
+        }
+
+        .bullet {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-top: 8px;
         }
 
         .footer {
-            padding: 14px 22px 18px;
+            padding: 14px 26px;
             border-top: 1px solid var(--border);
-            font-size: 12px;
-            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            color: var(--muted2);
+        }
+
+        .footer-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: pulse 2.8s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.85;
+                transform: scale(1.5);
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <canvas id="stars"></canvas>
 
-        <div class="banner"></div>
+    <div class="wrap">
+        <div class="hero">
 
-        <div class="topbar">
-            <button class="toggle" onclick="toggleTheme()">
-                <i data-lucide="moon" id="themeIcon"></i>
-            </button>
-        </div>
+            <div class="banner"></div>
 
-        <div class="profile">
-            <img src="./assets/headshot.png" />
-            <h1>Ishara Dissanayake</h1>
-        </div>
+            <div class="profile-row">
+                <img class="avatar" src="./assets/headshot.png" />
 
-        <p class="subtitle">
-            AI Engineer building LLM applications, developer tools, and production AI systems.
-        </p>
+                <div>
+                    <h1>Ishara Dissanayake</h1>
+                    <p class="handle">@thisisishara</p>
+                </div>
+            </div>
 
-        <div class="links">
-            <a class="link" href="./assets/resume.pdf">
-                <i data-lucide="file-text" class="icon"></i>
-                Resume
-            </a>
+            <p class="bio">
+                AI Engineer building LLM applications, developer tools, and production AI systems.
+            </p>
 
-            <a class="link" href="https://github.com/thisisishara">
-                <i data-lucide="github" class="icon"></i>
-                GitHub
-            </a>
+            <div class="links">
+                <a class="link cta" href="./assets/resume.pdf">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    Resume
+                </a>
+                <a class="link" href="https://github.com/thisisishara">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
+                    </svg>
+                    GitHub
+                </a>
+                <a class="link" href="https://linkedin.com">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                    LinkedIn
+                </a>
+                <a class="link" href="https://www.npmjs.com/~thisisishara">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456l-.01 10.382H5.13z" />
+                    </svg>
+                    npm
+                </a>
+                <a class="link" href="https://pypi.org/user/thisisishara/">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M11.914 0C5.82 0 6.2 2.656 6.2 2.656l.007 2.752h5.814v.826H3.9S0 5.789 0 11.969c0 6.18 3.403 5.959 3.403 5.959h2.031v-2.867s-.109-3.403 3.35-3.403h5.769s3.24.052 3.24-3.131V3.399S18.28 0 11.914 0zm-3.21 1.96a1.042 1.042 0 1 1 0 2.085 1.042 1.042 0 0 1 0-2.084z" />
+                        <path
+                            d="M12.086 24c6.094 0 5.714-2.656 5.714-2.656l-.007-2.752h-5.814v-.826h8.121S24 18.211 24 12.031c0-6.18-3.403-5.959-3.403-5.959h-2.031v2.867s.109 3.403-3.35 3.403h-5.769s-3.24-.052-3.24 3.131v5.128S5.72 24 12.086 24zm3.21-1.96a1.042 1.042 0 1 1 0-2.085 1.042 1.042 0 0 1 0 2.084z" />
+                    </svg>
+                    PyPI
+                </a>
+                <a class="link" href="https://www.hackerrank.com/thisisishara">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 0c1.285 0 9.75 4.886 10.392 6 .645 1.115.645 10.885 0 12S13.287 24 12 24C10.715 24 2.25 19.114 1.608 18 .963 16.886.963 7.115 1.608 6 2.252 4.886 10.715 0 12 0zm2.295 6.799c-.141 0-.258.115-.258.258v3.875H9.963V6.799h.75c.141 0 .258-.117.258-.258 0-.094-.047-.176-.129-.221l-1.5-.845a.264.264 0 0 0-.258 0l-1.5.845a.258.258 0 0 0 .129.479h.75v10.402h-.75a.258.258 0 0 0-.129.479l1.5.845c.082.047.176.047.258 0l1.5-.845a.258.258 0 0 0-.129-.479h-.75v-4.647h4.074v4.647h-.75a.258.258 0 0 0-.129.479l1.5.845c.082.047.176.047.258 0l1.5-.845a.258.258 0 0 0-.129-.479h-.75V6.799h.75a.258.258 0 0 0 .129-.479l-1.5-.845a.264.264 0 0 0-.258 0l-1.5.845a.258.258 0 0 0 .129.479h.557z" />
+                    </svg>
+                    HackerRank
+                </a>
+                <a class="link" href="mailto:thisismaduishara@gmail.com">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                    </svg>
+                    Email
+                </a>
+            </div>
 
-            <a class="link" href="https://linkedin.com">
-                <i data-lucide="linkedin" class="icon"></i>
-                LinkedIn
-            </a>
+            <div class="divider"></div>
 
-            <a class="link" href="mailto:mail@example.com">
-                <i data-lucide="mail" class="icon"></i>
-                Email
-            </a>
-        </div>
-
-        <div class="section">
-            <h2>Currently</h2>
-            <div class="card">
-                <ul>
-                    <li>Building AI-powered applications</li>
-                    <li>Working with LLMs, RAG, evaluation systems</li>
-                    <li>Exploring open-source AI tooling</li>
+            <div class="section">
+                <p class="section-label">Currently</p>
+                <ul class="now-list">
+                    <li><span class="bullet"></span>Building AI-powered applications</li>
+                    <li><span class="bullet"></span>Working with LLMs, RAG, and evaluation systems</li>
+                    <li><span class="bullet"></span>Exploring open-source AI tooling</li>
                 </ul>
             </div>
-        </div>
 
-        <div class="footer">
-            © <span id="year"></span> Ishara Dissanayake
-        </div>
+            <div class="footer">
+                <span class="footer-copy">© <span id="year"></span> Ishara Dissanayake</span>
+                <span class="footer-dot"></span>
+            </div>
 
+        </div>
     </div>
 
     <script>
-        /* THEME INIT (LOCAL STORAGE) */
-        function setTheme(isLight) {
-            document.body.classList.toggle("light", isLight);
-            localStorage.setItem("theme", isLight ? "light" : "dark");
+        (function () {
+            const canvas = document.getElementById('stars');
+            const ctx = canvas.getContext('2d');
 
-            const icon = document.getElementById("themeIcon");
-            icon.setAttribute("data-lucide", isLight ? "sun" : "moon");
-            lucide.createIcons();
-        }
+            let W, H, stars = [], shooters = [], t = 0;
 
-        /* TOGGLE */
-        function toggleTheme() {
-            const isLight = !document.body.classList.contains("light");
-            setTheme(isLight);
-        }
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+                buildStars();
+            }
 
-        /* INIT THEME */
-        const savedTheme = localStorage.getItem("theme");
-        const prefersLight = window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: light)").matches;
+            function buildStars() {
+                const count = Math.floor(W * H / 2200);
+                stars = Array.from({ length: count }, () => ({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    r: Math.random() < 0.8 ? 0.6 : 1.0,
+                    baseAlpha: 0.2 + Math.random() * 0.5,
+                    speed: 0.002 + Math.random() * 0.006,
+                    offset: Math.random() * Math.PI * 2
+                }));
+            }
 
-        if (savedTheme === "light" || (!savedTheme && prefersLight)) {
-            setTheme(true);
-        } else {
-            setTheme(false);
-        }
+            function spawnShooter() {
+                shooters.push({
+                    x: -50,
+                    y: Math.random() * H * 0.4,
+                    vx: 6,
+                    vy: 2,
+                    len: 90,
+                    alpha: 1,
+                    fade: 0.01,
+                    width: 1.1
+                });
+            }
 
-        /* YEAR */
-        document.getElementById("year").textContent = new Date().getFullYear();
+            function loopShooter() {
+                if (Math.random() < 0.25 && shooters.length < 1) {
+                    spawnShooter();
+                }
+                setTimeout(loopShooter, 2000);
+            }
 
-        lucide.createIcons();
+            function draw() {
+                t++;
+                ctx.clearRect(0, 0, W, H);
+
+                for (const s of stars) {
+                    const tw = 0.5 + 0.5 * Math.sin(t * s.speed + s.offset);
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255,255,255,${s.baseAlpha * tw})`;
+                    ctx.fill();
+                }
+
+                for (let i = shooters.length - 1; i >= 0; i--) {
+                    const s = shooters[i];
+
+                    const tailX = s.x - s.len;
+                    const tailY = s.y - s.len * 0.3;
+
+                    const grad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
+                    grad.addColorStop(0, "rgba(255,255,255,0)");
+                    grad.addColorStop(1, `rgba(255,255,255,${s.alpha})`);
+
+                    ctx.strokeStyle = grad;
+                    ctx.lineWidth = s.width;
+
+                    ctx.beginPath();
+                    ctx.moveTo(tailX, tailY);
+                    ctx.lineTo(s.x, s.y);
+                    ctx.stroke();
+
+                    s.x += s.vx;
+                    s.y += s.vy;
+                    s.alpha -= s.fade;
+
+                    if (s.alpha <= 0 || s.x > W || s.y > H) {
+                        shooters.splice(i, 1);
+                    }
+                }
+
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            draw();
+            loopShooter();
+        })();
     </script>
 
 </body>
