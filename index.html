@@ -169,6 +169,10 @@
             color: var(--text);
         }
 
+        a.link {
+            cursor: pointer;
+        }
+
         .cta {
             background: var(--accent);
             border-color: transparent;
@@ -240,8 +244,134 @@
             width: 5px;
             height: 5px;
             border-radius: 50%;
-            background: var(--accent);
+            background: #9CCC65;
             animation: pulse 2.8s infinite;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .82);
+            backdrop-filter: blur(14px);
+            display: none;
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.open {
+            display: flex;
+        }
+
+        .modal-content {
+            width: min(900px, 95vw);
+            height: 90vh;
+            background: #111;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            /* ← key fix */
+        }
+
+        .modal-header {
+            flex-shrink: 0;
+            /* ← key fix: header never collapses */
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+            padding: 0 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .modal-header a,
+        .modal-header button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--muted);
+            background: transparent;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-header a:hover,
+        .modal-header button:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+
+        .modal-header button.close-btn {
+            padding: 6px 10px;
+            font-size: 14px;
+        }
+
+        .modal-content.fullscreen {
+            width: 100vw;
+            height: 100vh;
+            border-radius: 0;
+            border: none;
+        }
+
+        .modal-header button.fullscreen-btn {
+            padding: 6px 10px;
+            font-size: 14px;
+        }
+
+        .pdf-body {
+            flex: 1;
+            /* ← key fix: takes all remaining height */
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pdf-body object,
+        .pdf-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        /* Fallback shown when PDF can't render inline */
+        .pdf-fallback {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            height: 100%;
+            color: var(--muted);
+            font-size: 0.875rem;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .pdf-fallback a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 20px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .pdf-fallback a:hover {
+            border-color: var(--border-hover);
         }
 
         @keyframes pulse {
@@ -283,7 +413,7 @@
             </p>
 
             <div class="links">
-                <a class="link cta" href="./assets/resume.pdf">
+                <a class="link cta" onclick="openResumeModal()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -359,7 +489,93 @@
         </div>
     </div>
 
+    <div id="resumeModal" class="modal" onclick="handleModalBackdropClick(event)">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <a href="./assets/resume.pdf" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                    </svg>
+                    Open
+                </a>
+                <a href="./assets/resume.pdf" download>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="7 10 12 15 17 10" />
+                        <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                    Download
+                </a>
+                <button class="fullscreen-btn" onclick="toggleFullscreen()" id="fsBtn" aria-label="Toggle fullscreen">
+                    <svg id="fsIcon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 3 21 3 21 9" />
+                        <polyline points="9 21 3 21 3 15" />
+                        <line x1="21" y1="3" x2="14" y2="10" />
+                        <line x1="3" y1="21" x2="10" y2="14" />
+                    </svg>
+                </button>
+                <button class="close-btn" onclick="closeResumeModal()" aria-label="Close">✕</button>
+            </div>
+
+            <div class="pdf-body" id="pdfBody">
+                <!-- object is more reliable than iframe for PDFs -->
+                <object id="pdfObject" data="./assets/resume.pdf" type="application/pdf">
+                    <!-- iframe as secondary fallback (Firefox, some Android) -->
+                    <iframe src="./assets/resume.pdf" title="Resume PDF">
+                        <!-- Final fallback if neither works -->
+                        <div class="pdf-fallback" style="display:flex">
+                            <p>Your browser can't display PDFs inline.</p>
+                            <a href="./assets/resume.pdf" target="_blank">Open in new tab</a>
+                            <a href="./assets/resume.pdf" download>Download PDF</a>
+                        </div>
+                    </iframe>
+                </object>
+            </div>
+
+        </div>
+    </div>
+
     <script>
+        function openResumeModal() {
+            document.getElementById("resumeModal").classList.add("open");
+            document.body.style.overflow = "hidden"; // prevent bg scroll
+        }
+
+        function closeResumeModal() {
+            document.getElementById("resumeModal").classList.remove("open");
+            document.body.style.overflow = "";
+        }
+
+        // Close when clicking the dark backdrop (not the modal itself)
+        function handleModalBackdropClick(e) {
+            if (e.target === document.getElementById("resumeModal")) {
+                closeResumeModal();
+            }
+        }
+
+        // Also close on Escape key
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeResumeModal();
+        });
+
+        const fsExpand = `<polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>`;
+        const fsCollapse = `<polyline points="8 3 3 3 3 8"/><polyline points="21 16 21 21 16 21"/><line x1="3" y1="3" x2="10" y2="10"/><line x1="21" y1="21" x2="14" y2="14"/>`;
+
+        function toggleFullscreen() {
+            const content = document.querySelector(".modal-content");
+            const icon = document.getElementById("fsIcon");
+            const isFs = content.classList.toggle("fullscreen");
+            icon.innerHTML = isFs ? fsCollapse : fsExpand;
+        }
+
+        document.getElementById("year").textContent = new Date().getFullYear();
+
         (function () {
             const canvas = document.getElementById('stars');
             const ctx = canvas.getContext('2d');
